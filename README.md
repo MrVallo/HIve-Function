@@ -1,14 +1,5 @@
-尚硅谷大数据项目之Hive常用函数大全
+# Hive常用函数大全
 
-（作者：尚硅谷研究院）
-
- 
-
-版本：V1.0
-
- 
-
- 
 
 # 第1章 算数运算
 
@@ -1160,7 +1151,11 @@ true
 
 说明：返回字符串A的长度
 
+```sql
   hive> select length('abcedfg') from iteblog;  7  
+```
+
+
 
 ## 6.2 字符串反转函数：reverse
 
@@ -1170,7 +1165,11 @@ true
 
 说明：返回字符串A的反转结果
 
+```sql
   hive> select reverse(abcedfg’) from iteblog;  gfdecba  
+```
+
+
 
 ## 6.3 字符串连接函数：concat
 
@@ -1180,7 +1179,11 @@ true
 
 说明：返回输入字符串连接后的结果，支持任意个输入字符串
 
+```sql
   hive> select concat(‘abc’,'def’,'gh’) from iteblog;  abcdefgh  
+```
+
+
 
 ## 6.4 带分隔符字符串连接函数：concat_ws
 
@@ -1190,7 +1193,11 @@ true
 
 说明：返回输入字符串连接后的结果，SEP表示各个字符串间的分隔符
 
+```sql
   hive> select concat_ws(',','abc','def','gh') from iteblog;  abc,def,gh  
+```
+
+
 
 ## 6.5 字符串截取函数：substr,substring
 
@@ -1200,7 +1207,13 @@ true
 
 说明：返回字符串A从start位置到结尾的字符串
 
-  hive> select substr('abcde',3) from iteblog;  cde  hive> select substring('abcde',3) from iteblog;  cde  hive> select substr('abcde',-1) from iteblog;   （和ORACLE相同）  e  
+```sql
+  hive> select substr('abcde',3) from iteblog;  cde  
+  hive> select substring('abcde',3) from iteblog;  cde  
+  hive> select substr('abcde',-1) from iteblog;   （和ORACLE相同）  e  
+```
+
+
 
 ## 6.6 字符串截取函数：substr,substring
 
@@ -1210,7 +1223,13 @@ true
 
 说明：返回字符串A从start位置开始，长度为len的字符串
 
-  hive> select substr('abcde',3,2) from iteblog;  cd  hive> select substring('abcde',3,2) from iteblog;  cd  hive>select substring('abcde',-2,2) from iteblog;  de  
+```sql
+  hive> select substr('abcde',3,2) from iteblog;  cd  
+  hive> select substring('abcde',3,2) from iteblog;  cd  
+  hive>select substring('abcde',-2,2) from iteblog;  de  
+```
+
+
 
 ## 6.7 字符串转大写函数：upper,ucase
 
@@ -1220,7 +1239,12 @@ true
 
 说明：返回字符串A的大写格式
 
-  hive> select upper('abSEd') from iteblog;  ABSED  hive> select ucase('abSEd') from iteblog;  ABSED  
+```sql
+  hive> select upper('abSEd') from iteblog;  ABSED  
+  hive> select ucase('abSEd') from iteblog;  ABSED  
+```
+
+
 
 ## 6.8 字符串转小写函数：lower,lcase
 
@@ -1230,7 +1254,12 @@ true
 
 说明：返回字符串A的小写格式
 
-  hive> select lower('abSEd') from iteblog;  absed  hive> select lcase('abSEd') from iteblog;  absed  
+```sql
+  hive> select lower('abSEd') from iteblog;  absed  
+  hive> select lcase('abSEd') from iteblog;  absed  
+```
+
+
 
 ## 6.9 去空格函数：trim
 
@@ -1240,7 +1269,11 @@ true
 
 说明：去除字符串两边的空格
 
+```sql
   hive> select trim(' abc  ') from iteblog;  abc  
+```
+
+
 
 ## 6.10 左边去空格函数：ltrim
 
@@ -1250,7 +1283,11 @@ true
 
 说明：去除字符串左边的空格
 
+```sql
   hive> select ltrim(' abc  ') from iteblog;  abc  
+```
+
+
 
 ## 6.11 右边去空格函数：rtrim
 
@@ -1260,7 +1297,11 @@ true
 
 说明：去除字符串右边的空格
 
+```sql
   hive> select rtrim(' abc  ') from iteblog;  abc  
+```
+
+
 
 ## 6.12 正则表达式替换函数：regexp_replace
 
@@ -1270,7 +1311,13 @@ true
 
 说明：将字符串A中的符合java正则表达式B的部分替换为C。注意，在有些情况下要使用转义字符,类似oracle中的regexp_replace函数。
 
+```sql
   hive> select regexp_replace('foobar', 'oo|ar', '') from iteblog;  fb  
+```
+
+
+
+
 
 ## 6.13 正则表达式解析函数：regexp_extract
 
@@ -1280,7 +1327,17 @@ true
 
 说明：将字符串subject按照pattern正则表达式的规则拆分，返回index指定的字符。
 
-  hive> select regexp_extract('foothebar', 'foo(.*?)(bar)',  1) from iteblog;  the  hive> select regexp_extract('foothebar', 'foo(.*?)(bar)',  2) from iteblog;  bar  hive> select regexp_extract('foothebar', 'foo(.*?)(bar)',  0) from iteblog;  foothebar  strong>注意，在有些情况下要使用转义字符，下面的等号要用双竖线转义，这是java正则表达式的规则。  select data_field,   regexp_extract(data_field,'.*?bgStart\\=([^&]+)',1) as aaa,   regexp_extract(data_field,'.*?contentLoaded_headStart\\=([^&]+)',1) as bbb,   regexp_extract(data_field,'.*?AppLoad2Req\\=([^&]+)',1) as ccc   from pt_nginx_loginlog_st   where pt  = '2012-03-26' limit 2;  
+```sql
+  hive> select regexp_extract('foothebar', 'foo(.*?)(bar)',  1) from iteblog;  the  
+  hive> select regexp_extract('foothebar', 'foo(.*?)(bar)',  2) from iteblog;  bar  
+  hive> select regexp_extract('foothebar', 'foo(.*?)(bar)',  0) from iteblog;  foothebar  strong>
+  注意，在有些情况下要使用转义字符，下面的等号要用双竖线转义，这是java正则表达式的规则。  
+  select data_field,   regexp_extract(data_field,'.*?bgStart\\=([^&]+)',1) as aaa,   regexp_extract(data_field,'.*?contentLoaded_headStart\\=([^&]+)',1) as bbb,   regexp_extract(data_field,'.*?AppLoad2Req\\=([^&]+)',1) as ccc   from pt_nginx_loginlog_st   where pt  = '2012-03-26' limit 2;  
+```
+
+
+
+
 
 ## 6.14 URL解析函数：parse_url
 
@@ -1290,7 +1347,15 @@ true
 
 说明：返回URL中指定的部分。partToExtract的有效值为：HOST, PATH, QUERY, REF, PROTOCOL, AUTHORITY, FILE, and USERINFO.
 
-  hive> select parse_url('[https：//www.iteblog.com/path1/p.php?k1=v1&k2=v2](https://www.iteblog.com/path1/p.php?k1=v1&k2=v2)#Ref1', 'HOST') from iteblog;  facebook.com  hive> select parse_url('[https：//www.iteblog.com/path1/p.php?k1=v1&k2=v2](https://www.iteblog.com/path1/p.php?k1=v1&k2=v2)#Ref1', 'QUERY', 'k1') from iteblog;  v1  
+```sql
+  hive> select parse_url('[https：//www.iteblog.com/path1/p.php?k1=v1&k2=v2](https://www.iteblog.com/path1/p.php?k1=v1&k2=v2)#Ref1', 'HOST') from iteblog;  facebook.com 
+  
+  hive> select parse_url('[https：//www.iteblog.com/path1/p.php?k1=v1&k2=v2](https://www.iteblog.com/path1/p.php?k1=v1&k2=v2)#Ref1', 'QUERY', 'k1') from iteblog;  v1  
+```
+
+
+
+
 
 ## 6.15 json解析函数：get_json_object
 
@@ -1300,7 +1365,11 @@ true
 
 说明：解析json的字符串json_string,返回path指定的内容。如果输入的json字符串无效，那么返回NULL。
 
+```sql
   hive> select get_json_object('{"store"：  >  {"fruit"：\[{"weight"：8,"type"："apple"},{"weight"：9,"type"："pear"}],  >    "bicycle"：{"price"：19.95,"color"："red"}  >  },  > "email"："amy@only_for_json_udf_test.net",  > "owner"："amy"  > }  >  ','$.owner') from iteblog;  amy  
+```
+
+
 
 ## 6.16 空格字符串函数：space
 
@@ -1310,7 +1379,11 @@ true
 
 说明：返回长度为n的字符串
 
+```sql
   hive> select space(10) from iteblog;  hive> select length(space(10)) from iteblog;  10  
+```
+
+
 
 ## 6.17 重复字符串函数：repeat
 
@@ -1320,7 +1393,11 @@ true
 
 说明：返回重复n次后的str字符串
 
+```sql
   hive> select repeat('abc',5) from iteblog;  abcabcabcabcabc  
+```
+
+
 
 ## 6.18 首字符ascii函数：ascii
 
@@ -1868,7 +1945,15 @@ select json_tuple('{"name":"王二狗","sex":"男","age":"25"}','name','sex','ag
 
 说明：根据输入的key和value对构建map类型
 
-  hive> Create table iteblog as select map('100','tom','200','mary') as t from iteblog;  hive> describe iteblog;  t     map<string ,string>  hive> select t from iteblog;  {"100"："tom","200"："mary"}  
+
+
+```sql
+  hive> Create table iteblog as select map('100','tom','200','mary') as t from iteblog;  
+  hive> describe iteblog;  t     map<string ,string>  
+  hive> select t from iteblog;  {"100"："tom","200"："mary"} 
+```
+
+ 
 
 ## 9.2 Struct类型构建： struct
 
@@ -1876,7 +1961,13 @@ select json_tuple('{"name":"王二狗","sex":"男","age":"25"}','name','sex','ag
 
 说明：根据输入的参数构建结构体struct类型
 
-  hive> create table iteblog as select struct('tom','mary','tim') as t from iteblog;  hive> describe iteblog;  t     struct<col1：string ,col2：string,col3：string>  hive> select t from iteblog;  {"col1"："tom","col2"："mary","col3"："tim"}  
+```sql
+ hive> create table iteblog as select struct('tom','mary','tim') as t from iteblog;  
+ hive> describe iteblog;  t     struct<col1：string ,col2：string,col3：string>  
+ hive> select t from iteblog;  {"col1"："tom","col2"："mary","col3"："tim"}  
+```
+
+
 
 ## 9.3 array类型构建： array
 
@@ -1884,7 +1975,13 @@ select json_tuple('{"name":"王二狗","sex":"男","age":"25"}','name','sex','ag
 
 说明：根据输入的参数构建数组array类型
 
-  hive> create table iteblog as select array("tom","mary","tim") as t from iteblog;  hive> describe iteblog;  t    array<string>  hive> select t from iteblog;  ["tom","mary","tim"]  
+```sql
+  hive> create table iteblog as select array("tom","mary","tim") as t from iteblog;  
+  hive> describe iteblog;  t    array<string>  
+  hive> select t from iteblog;  ["tom","mary","tim"]
+```
+
+
 
 # 第10章 复杂类型访问操作
 
@@ -1896,7 +1993,14 @@ select json_tuple('{"name":"王二狗","sex":"男","age":"25"}','name','sex','ag
 
 说明：返回数组A中的第n个变量值。数组的起始下标为0。比如，A是个值为['foo', 'bar']的数组类型，那么A[0]将返回'foo',而A[1]将返回'bar'
 
-  hive> create table iteblog as select array("tom","mary","tim") as t from iteblog;  hive> select t[0],t[1],t[2] from iteblog;  tom    mary  tim  
+ 
+
+```sql
+ hive> create table iteblog as select array("tom","mary","tim") as t from iteblog;  
+ hive> select t[0],t[1],t[2] from iteblog;  tom    mary  tim  
+```
+
+
 
 ## 10.2 map类型访问： M[key]
 
@@ -1906,7 +2010,12 @@ select json_tuple('{"name":"王二狗","sex":"男","age":"25"}','name','sex','ag
 
 说明：返回map类型M中，key值为指定值的value值。比如，M是值为{'f' -> 'foo', 'b' -> 'bar', 'all' -> 'foobar'}的map类型，那么M['all']将会返回'foobar'
 
-  hive> Create table iteblog as select map('100','tom','200','mary') as t from iteblog;  hive> select t['200'],t['100'] from iteblog;  mary  tom  
+```sql
+ hive> Create table iteblog as select map('100','tom','200','mary') as t from iteblog;  
+ hive> select t['200'],t['100'] from iteblog;  mary  tom  
+```
+
+
 
 ## 10.3 struct类型访问： S.x
 
@@ -1916,7 +2025,13 @@ select json_tuple('{"name":"王二狗","sex":"男","age":"25"}','name','sex','ag
 
 说明：返回结构体S中的x字段。比如，对于结构体struct foobar {int foo, int bar}，foobar.foo返回结构体中的foo字段
 
-  hive> create table iteblog as select struct('tom','mary','tim') as t from iteblog;  hive> describe iteblog;  t     struct<col1：string ,col2：string,col3：string>  hive> select t.col1,t.col3 from iteblog;  tom   tim  
+```sql
+  hive> create table iteblog as select struct('tom','mary','tim') as t from iteblog;  
+  hive> describe iteblog;  t     struct<col1：string ,col2：string,col3：string>  
+  hive> select t.col1,t.col3 from iteblog;  tom   tim  
+```
+
+
 
 # 第11章 复杂类型长度统计函数
 
@@ -1928,7 +2043,9 @@ select json_tuple('{"name":"王二狗","sex":"男","age":"25"}','name','sex','ag
 
 说明： 返回map类型的长度
 
+```sql
   hive> select size(map('100','tom','101','mary')) from iteblog;  2  
+```
 
 ## 11.2 array类型长度函数： size(Array<T>)
 
@@ -1938,7 +2055,11 @@ select json_tuple('{"name":"王二狗","sex":"男","age":"25"}','name','sex','ag
 
 说明： 返回array类型的长度
 
+```sql
   hive> select size(array('100','101','102','103')) from iteblog;  4  
+```
+
+
 
 ## 11.3 类型转换函数
 
@@ -1958,7 +2079,11 @@ select json_tuple('{"name":"王二狗","sex":"男","age":"25"}','name','sex','ag
 
 ​    说明： 返回转换后的数据类型
 
+```sql
   hive> select cast(1 as bigint) from iteblog;  1  
+```
+
+
 
 # 第12章 窗口函数 
 
@@ -1972,6 +2097,7 @@ select json_tuple('{"name":"王二狗","sex":"男","age":"25"}','name','sex','ag
 
 ·窗口子句，可以进一步限定范围
 
+```sql
 (rows | range) between (unbounded | [num]) preceding and ([num] preceding | current  row | (unbounded | [num]) following 
 
 (rows | range) between current row and (current row | (unbounded | [num]) following)
@@ -1983,6 +2109,9 @@ rows between unbounded preceding and unbounded following
 行的范围为上无边界到下无边界（第一行到最后一行）。
 
 注：窗口函数是一行一行执行的。
+```
+
+
 
 ## 12.1 偏移量函数：lag
 
